@@ -31,43 +31,47 @@ The Poisson distribution is the discrete probability distribution of the number 
 
 # Program :
 ```
-DESIGNED BY: HARSSHITHA LAKSHMANAN
-REGISTER NO: 21222320075
-
-
 import numpy as np
 import math
 import scipy.stats
-L=[int(i) for i in input().split()]
-N=len(L); M=max(L) 
-X=list();f=list()
-for i in range (M+1):
-    c = 0
-    for j in range(N):
-        if L[j]==i:
-            c=c+1
-    f.append(c)
-    X.append(i)
-sf=np.sum(f)
-p=list()
-for i in range(M+1):
-    p.append(f[i]/sf) 
-mean=np.inner(X,p)
-p=list();E=list();xi=list()
+data = [int(i) for i in input().split()]
+n = len(data)
+max_val = max(data)
+values = list()
+frequencies = list()
+
+for val in range(max_val + 1):
+    count = 0
+    for j in range(n):
+        if data[j] == val:
+            count += 1
+    frequencies.append(count)
+    values.append(val)
+total_freq = np.sum(frequencies)
+probabilities = list()
+for i in range(max_val + 1):
+    probabilities.append(frequencies[i] / total_freq)
+mean_val = np.inner(values, probabilities)
+poisson_probs = list()
+expected_freqs = list()
+chi_square_terms = list()
 print("X P(X=x) Obs.Fr Exp.Fr xi")
 print("--------------------------")
-for x in range(M+1):
-    p.append(math.exp(-mean)*mean**x/math.factorial(x))
-    E.append(p[x]*sf)
-    xi.append((f[x]-E[x])**2/E[x])
-    print("%2.2f %2.3f %4.2f %3.2f %3.2f"%(x,p[x],f[x],E[x],xi[x]))
+for x in range(max_val + 1):
+    poisson_prob = math.exp(-mean_val) * mean_val**x / math.factorial(x)
+    expected = poisson_prob * total_freq
+    chi_term = (frequencies[x] - expected) ** 2 / expected
+    poisson_probs.append(poisson_prob)
+    expected_freqs.append(expected)
+    chi_square_terms.append(chi_term)
+    print("%2.2f %2.3f %4.2f %3.2f %3.2f" % (x, poisson_prob, frequencies[x], expected, chi_term))
 print("--------------------------")
-cal_chi2_sq=np.sum(xi)
-print("Calculated value of Chi square is %4.2f"%cal_chi2_sq)
-table_chi2=scipy.stats.chi2.ppf(1-.01,df=M)
-print("Table value of chi square at 1 level is %4.2f"%table_chi2)
-if cal_chi2_sq<table_chi2:
-    print("The given data can be fitted in poisson Distribution at 1% LOS")
+calculated_chi2 = np.sum(chi_square_terms)
+print("Calculated value of Chi square is %4.2f" % calculated_chi2)
+chi2_critical = scipy.stats.chi2.ppf(1 - 0.01, df=max_val)
+print("Table value of chi square at 1 level is %4.2f" % chi2_critical)
+if calculated_chi2 < chi2_critical:
+    print("The given data can be fitted in Poisson Distribution at 1% LOS")
 else:
     print("The given data cannot be fitted in Poisson Distribution at 1% LOS")
  ```
@@ -75,7 +79,7 @@ else:
 
 # Output : 
 
-![image](https://github.com/harshulaxman/Poisson_distribution/assets/145686689/2629970c-949a-443a-b4f7-17ca95499d53)
+![Screenshot 2025-05-02 141245](https://github.com/user-attachments/assets/3dd3d352-eba1-4602-bd17-4a821cc2f7dc)
 
 
 # Results
