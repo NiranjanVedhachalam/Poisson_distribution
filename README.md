@@ -1,5 +1,9 @@
-# DATE:
-# EXPNO:2 Fitting Poisson  distribution
+NAME: NIRANJAN V
+
+REG NO: 212224110042
+
+
+#  EX - 02 Fitting Poisson  distribution
 # Aim : 
 
 To fit poisson distribution for the arrival of objects per minute from the feeder
